@@ -42,6 +42,9 @@ class MemberCenter(unittest.TestCase):
 
     @ddt.data(*test_data)
     def test_mc_lpn(self, case_data):
+        """
+        车牌校验接口
+        """
         print(case_data)
         response_obj = SendRequests().send(self.s, case_data, cookies=cookies)
         response_dict = response_obj.json()

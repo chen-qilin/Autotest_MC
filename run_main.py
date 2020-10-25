@@ -18,11 +18,11 @@ import get_path_info
 path = get_path_info.get_Path()
 
 
-def run_case(dir="testcase"):
-    case_dir = path + "\\" + dir
+def run_case(dir1="testcase"):
+    case_dir = path + "\\" + dir1
     # print(case_dir, 'run_case')
     # test_case = unittest.TestSuite()
-    discover = unittest.defaultTestLoader.discover(case_dir, pattern="case_02_qq.py", top_level_dir=None)
+    discover = unittest.defaultTestLoader.discover(case_dir, pattern="mc_lpn.py", top_level_dir=None)
     return discover
 
 
