@@ -8,9 +8,11 @@
 @file: request_sender.py
 @time: 2018/3/24 11:40
 """
-from common.excel_reader import ReadExcel
+
 import requests
 import ast
+from common.log import logger
+from common.excel_reader import ReadExcel
 # import json
 
 
@@ -18,7 +20,10 @@ class SendRequests:
     """
     封装request的请求对象
     """
-    def send(self, s, api_data, cookies=''):
+    def __init__(self):
+        self.logger = logger
+
+    def send(self, session_obj, api_data, cookies=''):
         """
         从读取的表格中获取响应的参数作为传递，cookie可以自己定义
         """
@@ -44,10 +49,17 @@ class SendRequests:
 
             # 根据cookie的情况，发起get请求
             if cookies == '':
-                request_obj = s.request('get', url=url, headers=headers, params=params, verify=verify)
+                request_obj = session_obj.request('get', url=url, headers=headers, params=params, verify=verify)
+                result = request_obj.json()
+                self.logger.info('GET: '+str(url)+' :Params:'+str(params))
+                self.logger.info('Result:' + str(result))
             else:
-                request_obj = s.request('get', url=url, headers=headers, params=params, verify=verify, cookies=cookies)
-            return request_obj
+                request_obj = session_obj.request('get', url=url, headers=headers, params=params, verify=verify,
+                                                  cookies=cookies)
+                result = request_obj.json()
+                self.logger.info('GET: '+str(url)+' :Params:'+str(params))
+                self.logger.info('Result:' + str(result))
+            return result
 
         # post方法封装
         elif method == 'post':
@@ -65,15 +77,21 @@ class SendRequests:
 
             # 根据cookie的情况，发起post请求
             if cookies == '':
-                request_obj = s.request('post', url=url, headers=headers, params=params, json=post_data, verify=verify)
+                request_obj = session_obj.request('post', url=url, headers=headers, params=params, json=post_data, verify=verify)
+                result = request_obj.json()
+                self.logger.info('POST: ' + str(url) + ' Post_data:' + str(post_data))
+                self.logger.info('Result: ' + str(result))
             else:
-                request_obj = s.request('post', url=url, headers=headers, params=params, json=post_data, verify=verify,
-                                        cookies=cookies)
+                request_obj = session_obj.request('post', url=url, headers=headers, params=params, json=post_data, verify=verify,
+                                                  cookies=cookies)
+                result = request_obj.json()
+                self.logger.info('POST: ' + str(url) + ' Post_data:' + str(post_data))
+                self.logger.info('Result: ' + str(result))
             return request_obj
 
         # method只能是get或post
         else:
-            print('只支持get和post方法')
+            self.logger.info('只支持get和post方法')
             raise Exception('Only support GET or POST method.')
 
 

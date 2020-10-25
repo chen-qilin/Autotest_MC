@@ -34,7 +34,7 @@ class MemberCenter(unittest.TestCase):
         会员中心—车牌校验—接口测试
     """
     def setUp(self):
-        self.s = requests.session()
+        self.session_obj = requests.session()
         warnings.simplefilter('ignore', ResourceWarning)
 
     def tearDown(self):
@@ -46,8 +46,8 @@ class MemberCenter(unittest.TestCase):
         车牌校验接口
         """
         print(case_data)
-        response_obj = SendRequests().send(self.s, case_data, cookies=cookies)
-        response_dict = response_obj.json()
+        response_result = SendRequests().send(self.session_obj, case_data, cookies=cookies)
+
 
         # 期望结果code
         if case_data["expect_code"] == '':
@@ -55,7 +55,7 @@ class MemberCenter(unittest.TestCase):
         else:
             # print(type(case_data['expect_code']))
             expect = case_data['expect_code']
-            response = response_dict['code']
+            response = response_result['code']
             self.assertEqual(expect, response)
 
         # 期望结果data
@@ -63,7 +63,7 @@ class MemberCenter(unittest.TestCase):
             pass
         else:
             expect = case_data['expect_data']
-            response = response_dict['data']
+            response = response_result['data']
             self.assertEqual(expect, response)
 
         # 期望结果message
@@ -71,7 +71,7 @@ class MemberCenter(unittest.TestCase):
             pass
         else:
             expect = case_data['expect_msg']
-            response = response_dict['message']
+            response = response_result['message']
             self.assertIn(expect, response)
 
 
