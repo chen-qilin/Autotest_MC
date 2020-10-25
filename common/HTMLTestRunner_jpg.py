@@ -646,7 +646,7 @@ class _TestResult(TestResult):
 
     def stopTest(self, test):
         # Usually one of addSuccess, addError or addFailure would have been called.
-        # But there are some path in unittest that would bypass this.
+        # But there are some file_xlsx in unittest that would bypass this.
         # We must disconnect stdout in stopTest(), which is guaranteed to be called.
 
         if self.retry:

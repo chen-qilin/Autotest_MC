@@ -15,19 +15,20 @@ import os
 from common.HTMLTestRunner_jpg import HTMLTestRunner
 import get_path_info
 
-def run_case(dir = "testcase"):
+path = get_path_info.get_Path()
+
+
+def run_case(dir="testcase"):
     case_dir = path + "\\" + dir
-    #print(case_dir)
-    test_case = unittest.TestSuite()
-    discover = unittest.defaultTestLoader.discover(case_dir,pattern="case_02_qq.py",top_level_dir=None)
+    # print(case_dir, 'run_case')
+    # test_case = unittest.TestSuite()
+    discover = unittest.defaultTestLoader.discover(case_dir, pattern="case_02_qq.py", top_level_dir=None)
     return discover
 
 
 if __name__ == '__main__':
-    path = get_path_info.get_Path()
     current_time = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
     report_path = path + "\\report\\" + current_time + '.html'  # 生成测试报告的路径
-    fp = open(report_path, "wb")
-    runner = HTMLTestRunner(stream=fp, title=u"自动化测试报告", description=u'qq接口', verbosity=2)
-    runner.run(run_case())
-    fp.close()
+    with open(report_path, "wb") as fp:
+        runner = HTMLTestRunner(stream=fp, title=u"自动化测试报告", description=u'接口测试', verbosity=2)
+        runner.run(run_case())

@@ -14,13 +14,18 @@ import unittest
 import requests
 from ddt import ddt,data,unpack
 from common.sendRequests import SendRequests
-from common.readExcel import ReadExcel
+from common.excel_reader import ReadExcel
 import os
+from get_path_info import get_Path
 
-# print(os.path.dirname(os.getcwd()))
-path = os.path.dirname(os.getcwd())+"\\data\\qq_apiTest.xlsx"
-print(path)
-# testData = ReadExcel.readExcel(path,"Sheet1")
+# print(os.file_xlsx.dirname(os.getcwd()))
+print(os.getcwd(),'getcwd')
+print(os.path.dirname(os.getcwd()), 'dir')
+p_dir = get_Path()
+print( os.path.split(os.path.realpath(__file__))[0])
+file_xlsx = os.path.join(p_dir, 'data', 'qq_apiTest.xlsx')
+print(file_xlsx, '4')
+testData = ReadExcel.readExcel(file_xlsx, "Sheet1")
 
 # @ddt
 # class Test1(unittest.TestCase):
@@ -44,7 +49,7 @@ print(path)
 #         #print(expect_result)
 #
 #         self.assertEqual(re.json()["reason"], expect_result, "返回错误,实际结果是%s"%re.json()["reason"])
-
-
+#
+#
 # if __name__ == '__main__':
-    # unittest.main(verbosity=2)
+#     unittest.main(verbosity=2)
