@@ -35,5 +35,7 @@ if __name__ == '__main__':
     log.info('Report_path:'+report_path)
     with open(report_path, "wb") as fp:
         runner = HTMLTestRunner(stream=fp, title=u"自动化测试报告", description=u'接口测试', verbosity=2)
-        runner.run(run_case())
-
+        try:
+            runner.run(run_case())
+        except Exception as e:
+            log.info('Error:'+e)

@@ -77,13 +77,14 @@ class SendRequests:
 
             # 根据cookie的情况，发起post请求
             if cookies == '':
-                request_obj = session_obj.request('post', url=url, headers=headers, params=params, json=post_data, verify=verify)
+                request_obj = session_obj.request('post', url=url, headers=headers, params=params, json=post_data,
+                                                  verify=verify)
                 result = request_obj.json()
                 self.logger.info('POST: ' + str(url) + ' Post_data:' + str(post_data))
                 self.logger.info('Result: ' + str(result))
             else:
-                request_obj = session_obj.request('post', url=url, headers=headers, params=params, json=post_data, verify=verify,
-                                                  cookies=cookies)
+                request_obj = session_obj.request('post', url=url, headers=headers, params=params, json=post_data,
+                                                  verify=verify, cookies=cookies)
                 result = request_obj.json()
                 self.logger.info('POST: ' + str(url) + ' Post_data:' + str(post_data))
                 self.logger.info('Result: ' + str(result))
