@@ -19,7 +19,7 @@ class ReadExcel:
         self.path = get_path_info.get_Path()  # 拿到该项目所在的绝对路径
 
     def read(self, filename, sheet_name="Sheet1"):
-        xls_path = os.path.join(self.path, "data", filename)
+        xls_path = os.path.join(self.path, "testdata", filename)
 
         file = open_workbook(xls_path)  # 打开用例Excel
 
