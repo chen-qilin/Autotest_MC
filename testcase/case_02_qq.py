@@ -13,7 +13,7 @@ import unittest
 
 import requests
 from ddt import ddt,data,unpack
-from common.sendRequests import SendRequests
+from common.request_sender import SendRequests
 from common.excel_reader import ReadExcel
 import os
 from get_path_info import get_Path
@@ -36,7 +36,7 @@ testData = ReadExcel.readExcel(file_xlsx, "Sheet1")
 #     def tearDown(self):
 #         pass
 #
-#     @data(*testData)
+#     @data(*test_data)
 #     def test_qq_api(self,data):
 #
 #         re = SendRequests().sendRequests(self.s, data)

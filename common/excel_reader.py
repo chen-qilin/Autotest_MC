@@ -50,9 +50,9 @@ class ReadExcel:
 
 if __name__ == '__main__':
     pass
-    # s = ReadExcel().read('mc_lpn.xlsx', "Sheet1")
-    # for i in s:
-    #     print(s)
+    s = ReadExcel().read('mc_lpn.xlsx', "Sheet1")
+    for i in s:
+        print(s)
 
 
 

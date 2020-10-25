@@ -5,7 +5,7 @@
 @author: fky
 @site:
 @software: PyCharm
-@file: sendRequests.py
+@file: request_sender.py
 @time: 2018/3/24 11:40
 """
 from common.excel_reader import ReadExcel
@@ -52,6 +52,8 @@ class SendRequests:
         else:
             print('只支持get和post方法')
             raise Exception('Only support GET or POST method.')
+
+
         # # 发送请求
         # if cookies == '':
         #     request_obj = s.request(method=method, url=url, headers=h, params=par, data=body, verify=v)
@@ -91,10 +93,9 @@ class SendRequests:
         #     body = {}
 
 
-
 if __name__ == '__main__':
-    s = requests.session()
-    testData = ReadExcel().read('test.xlsx')
-    print(testData)
-    response = SendRequests().send(s, testData[0])
-    print(response.request.headers)
+    with requests.session() as s:
+        testData = ReadExcel().read('test.xlsx')
+        print(testData)
+        # response = SendRequests().send(s, test_data[0])
+        # print(response.request.headers)

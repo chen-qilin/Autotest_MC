@@ -10,21 +10,16 @@
 @time: 2018/3/16 10:58
 """
 import unittest
-
 import requests
-from ddt import ddt, data
-from common.sendRequests import SendRequests
+import ddt
+from common.request_sender import SendRequests
 from common.excel_reader import ReadExcel
 import warnings
-# import os
-# from get_path_info import get_Path
 
-# file_xlsx = os.path.join(get_Path(), 'data', 'mc_lpn.xlsx')
-#
-# print(file_xlsx, '4')
+# 读取excel中的测试数据
+test_data = ReadExcel().read('mc_lpn.xlsx', 'Sheet1')
 
-testData = ReadExcel().read('mc_lpn.xlsx', 'Sheet1')
-
+# 自定义cookie
 cookies = {
     'logId': '426b481b',
     'pp_user_id': '43508577064735267',
@@ -33,9 +28,11 @@ cookies = {
 }
 
 
-@ddt
-class Test1(unittest.TestCase):
-
+@ddt.ddt
+class MemberCenter(unittest.TestCase):
+    """
+        会员中心—车牌校验—接口测试
+    """
     def setUp(self):
         self.s = requests.session()
         warnings.simplefilter('ignore', ResourceWarning)
@@ -43,22 +40,36 @@ class Test1(unittest.TestCase):
     def tearDown(self):
         pass
 
-    @data(*testData)
-    def test_qq_api(self, data1):
+    @ddt.data(*test_data)
+    def test_mc_lpn(self, case_data):
+        print(case_data)
+        response_obj = SendRequests().send(self.s, case_data, cookies=cookies)
+        response_dict = response_obj.json()
 
-        request_obj = SendRequests().send(self.s, data1, cookies=cookies)
-        print(request_obj.json())
-        self.assertIn('成功', request_obj.text)
-        #切割字符串取后面的部分
+        # 期望结果code
+        if case_data["expect_code"] == '':
+            pass
+        else:
+            # print(type(case_data['expect_code']))
+            expect = case_data['expect_code']
+            response = response_dict['code']
+            self.assertEqual(expect, response)
 
-        expect_result1 = data1["expect_result"].split(":")[1]
-        print(expect_result1)
+        # 期望结果data
+        if case_data["expect_data"] == '':
+            pass
+        else:
+            expect = case_data['expect_data']
+            response = response_dict['data']
+            self.assertEqual(expect, response)
 
-        # #转换为字符串
-        # expect_result = eval(expect_result1)
-        # #print(expect_result)
-        #
-        # self.assertEqual(re.json()["reason"], expect_result, "返回错误,实际结果是%s"%re.json()["reason"])
+        # 期望结果message
+        if case_data["expect_msg"] == '':
+            pass
+        else:
+            expect = case_data['expect_msg']
+            response = response_dict['message']
+            self.assertIn(expect, response)
 
 
 if __name__ == '__main__':

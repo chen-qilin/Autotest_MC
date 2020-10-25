@@ -13,7 +13,7 @@ import unittest
 import requests
 from ddt import ddt,data,unpack
 
-from common.sendRequests import SendRequests
+from common.request_sender import SendRequests
 
 from common.excel_reader import ReadExcel
 import os
