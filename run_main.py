@@ -12,7 +12,8 @@
 import time
 import unittest
 import get_path_info
-from common.HTMLTestRunner_jpg import HTMLTestRunner
+# from common.HTMLTestRunner_jpg import HTMLTestRunner
+from common.HTMLTestReportCN import HTMLTestRunner
 from common.log import logger
 
 # 定位当前文件的路径
@@ -38,4 +39,4 @@ if __name__ == '__main__':
         try:
             runner.run(run_case())
         except Exception as e:
-            log.info('Error:'+e)
+            log.info('Error:%s' % e)
