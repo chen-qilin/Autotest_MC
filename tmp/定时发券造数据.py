@@ -26,7 +26,7 @@ with SSHTunnelForwarder(
 
     cur = db_connect.cursor()
     print('connect success.')
-    with open('../testcase/test1.txt', 'a') as f:
+    with open('../test1.txt', 'a') as f:
         coupon_info = '[{"couponCfgId":"MONTHLY_PERCENT_10_CUT","couponCount":1,"couponName":"月度九折优惠券","cvcId":"3","discount":9.0,"maxDiscountAmount":10000}]'
         data_list = []
         for i in range(5282):
