@@ -9,23 +9,27 @@
 @file: case_01.py
 @time: 2018/3/16 10:58
 """
+import ddt
 import unittest
 import requests
-import ddt
+import warnings
 from common.request_sender import SendRequests
 from common.excel_reader import ReadExcel
-import warnings
+
 
 # 读取excel中的测试数据
-test_data = ReadExcel().read('mc_lpn.xlsx', 'Sheet1')
+test_data = ReadExcel().read('mc_lpn.xlsx')
+cookies = ReadExcel().read_base_cookie('base_cookie.xlsx')
 
-# 自定义cookie
-cookies = {
-    'logId': '426b481b',
-    'pp_user_id': '43508577064735267',
-    'appid': 'wxed9d3e6dc4a3704f',
-    'openid': 'o5sBys9oyRLcdz91FitDdTaRpfuY',
-}
+# print(cookies)
+
+# # 自定义cookie
+# cookies = {
+#     'logId': '426b481b',
+#     'pp_user_id': '43508577064735267',
+#     'appid': 'wxed9d3e6dc4a3704f',
+#     'openid': 'o5sBys9oyRLcdz91FitDdTaRpfuY',
+# }
 
 
 @ddt.ddt
@@ -37,9 +41,6 @@ class MemberCenter(unittest.TestCase):
         self.session_obj = requests.session()
         warnings.simplefilter('ignore', ResourceWarning)
 
-    def tearDown(self):
-        pass
-
     @ddt.data(*test_data)
     def test_mc_lpn(self, case_data):
         """
@@ -47,7 +48,6 @@ class MemberCenter(unittest.TestCase):
         """
         print(case_data)
         response_result = SendRequests().send(self.session_obj, case_data, cookies=cookies)
-
 
         # 期望结果code
         if case_data["expect_code"] == '':
@@ -73,6 +73,9 @@ class MemberCenter(unittest.TestCase):
             expect = case_data['expect_msg']
             response = response_result['message']
             self.assertIn(expect, response)
+
+    def tearDown(self):
+        pass
 
 
 if __name__ == '__main__':

@@ -10,6 +10,7 @@
 @time: 2018/3/24 9:37
 """
 import os
+import ast
 import get_path_info
 from xlrd import open_workbook
 
@@ -47,12 +48,34 @@ class ReadExcel:
             print("表格未填写数据")
             return None
 
+    def read_base_cookie(self, filename, sheet_name="Sheet1"):
+        xls_path = os.path.join(self.path, "testdata", filename)
+
+        file = open_workbook(xls_path)  # 打开用例Excel
+
+        table = file.sheet_by_name(sheet_name)
+
+        # 获取总行数、总列数
+        rows = table.nrows
+
+        # 把基础cookies返回
+        if rows > 1:
+            base_cookie = table.row_values(1)
+            base_cookie = ast.literal_eval(base_cookie[0])  # 把字符串，转成dict
+            return base_cookie
+        else:
+            print("表格未填写数据")
+            return None
+
 
 if __name__ == '__main__':
     pass
-    s = ReadExcel().read('mc_lpn.xlsx', "Sheet1")
-    for i in s:
-        print(s)
+    # s = ReadExcel().read('mc_lpn.xlsx', "Sheet1")
+    s = ReadExcel().read_base_cookie('base_cookie.xlsx')
+    print(s)
+    print(type(s))
+    # for i in s:
+    #     print(s)
 
 
 
