@@ -41,8 +41,12 @@ class SendEmail(object):
         subject = '接口测试邮件'
         message['Subject'] = Header(subject, 'utf-8')
         # 邮件正文内容
-        part = MIMEText('Dear all:\n       附件为接口自动化测试报告，此为自动发送邮件，请勿回复，谢谢！', 'plain', 'utf-8')
-        message.attach(part)
+        # part = MIMEText('Dear all:\n       附件为接口自动化测试报告，此为自动发送邮件，请勿回复，谢谢！', 'plain', 'utf-8')
+        with open(file=report_path, mode='r', encoding='utf-8') as f:
+            body_text = f.read()
+            part = MIMEText(body_text, 'html', 'utf-8')
+            message.attach(part)
+
         # 发送附件
         with open(file=report_path, mode='r', encoding='utf-8') as fp:
             report_data = fp.read()
@@ -68,7 +72,7 @@ class SendEmail(object):
 
 
 if __name__ == '__main__':
-    SendEmail().send_email()  # 测试邮件功能模块
+    SendEmail().send_email(r'D:\Autotest\report\2020-11-18-17_44_22.html')  # 测试邮件功能模块
     # with open(file=r'D:\Autotest\report\report.html', mode='r', encoding='utf-8') as f:
     #     print(f.read())
     # a = MIMEText(open(file=r'D:\Autotest\report\report.html', mode='r', encoding='utf-8').read(), 'base64', 'utf-8')
