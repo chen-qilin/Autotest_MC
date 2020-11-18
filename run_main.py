@@ -15,14 +15,21 @@ import get_path_info
 # from common.HTMLTestRunner_jpg import HTMLTestRunner
 from common.HTMLTestReportCN import HTMLTestRunner
 from common.log import logger
+from config import read_config
+from common.send_email import SendEmail
 
 # 定位当前文件的路径
 path = get_path_info.get_Path()
+
 # 日志
 log = logger
 
-def run_case(dir1="testcase"):
-    case_dir = path + "\\" + dir1
+# 读取配置中的邮箱开关
+on_off = read_config.ReadConfig().get_email('on_off')
+
+
+def run_case(tmp_dir="testcase"):
+    case_dir = path + "\\" + tmp_dir
     # print(case_dir, 'run_case')
     # test_case = unittest.TestSuite()
     discover = unittest.defaultTestLoader.discover(case_dir, pattern="mc_lpn.py", top_level_dir=None)
@@ -40,3 +47,9 @@ if __name__ == '__main__':
             runner.run(run_case())
         except Exception as e:
             log.info('Error:%s' % e)
+
+    if on_off == 'on':
+        SendEmail().send_email(report_path)
+        print(report_path)
+    else:
+        print("邮件发送开关配置关闭，请打开开关后可正常自动发送测试报告")
