@@ -1,3 +1,4 @@
 /report/*
 /log/*
 /.idea
+/config/config.ini
