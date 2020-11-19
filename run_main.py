@@ -16,7 +16,7 @@ import get_path_info
 from common.HTMLTestReportCN import HTMLTestRunner
 from common.log import logger
 from config import read_config
-from common.send_email import SendEmail
+from common.email_sender import SendEmail
 
 # 定位当前文件的路径
 path = get_path_info.get_Path()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@File:send_email.py
+@File:email_sender.py
 @E-mail:364942727@qq.com
 @Time:2020/9/5 7:58 下午
 @Author:Nobita
