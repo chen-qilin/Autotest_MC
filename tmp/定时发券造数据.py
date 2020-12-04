@@ -12,17 +12,17 @@ import uuid
 
 from sshtunnel import SSHTunnelForwarder
 
-with SSHTunnelForwarder(
-        ('ssh-tunnel-16953.keytop.cn', 36893),  # B机器的配置
-        ssh_username='ssh',
-        ssh_password='sS_hH#aA&369',
-        remote_bind_address=('rm-bp1r60w1kvb30o250.mysql.rds.aliyuncs.com', 3306)) as server:  # A机器的配置
-
-    db_connect = pymysql.connect(host='127.0.0.1',  # 此处必须是是127.0.0.1
-                                 port=server.local_bind_port,
-                                 user='root',
-                                 passwd='Keytop@123',
-                                 db='superpark_wx_test')
+# with SSHTunnelForwarder(
+#         ('ssh-tunnel-16953.keytop.cn', 36893),  # B机器的配置
+#         ssh_username='ssh',
+#         ssh_password='sS_hH#aA&369',
+#         remote_bind_address=('rm-bp1r60w1kvb30o250.mysql.rds.aliyuncs.com', 3306)) as server:  # A机器的配置
+#
+#     db_connect = pymysql.connect(host='127.0.0.1',  # 此处必须是是127.0.0.1
+#                                  port=server.local_bind_port,
+#                                  user='root',
+#                                  passwd='Keytop@123',
+#                                  db='superpark_wx_test')
 
     cur = db_connect.cursor()
     print('connect success.')

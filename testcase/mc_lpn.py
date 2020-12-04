@@ -19,6 +19,8 @@ from common.excel_reader import ReadExcel
 
 # 读取excel中的测试数据
 test_data = ReadExcel().read('mc_lpn.xlsx')
+
+# 读取公共cookie
 cookies = ReadExcel().read_base_cookie('base_cookie.xlsx')
 
 # print(cookies)
@@ -64,7 +66,7 @@ class MemberCenter(unittest.TestCase):
         else:
             expect = case_data['expect_data']
             response = response_result['data']
-            self.assertEqual(expect, response)
+            self.assertEqual(expect, response)-
 
         # 期望结果message
         if case_data["expect_msg"] == '':

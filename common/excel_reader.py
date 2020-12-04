@@ -70,8 +70,8 @@ class ReadExcel:
 
 if __name__ == '__main__':
     pass
-    # s = ReadExcel().read('mc_lpn.xlsx', "Sheet1")
-    s = ReadExcel().read_base_cookie('base_cookie.xlsx')
+    s = ReadExcel().read('mc_lpn.xlsx', "Sheet1")
+    # s = ReadExcel().read_base_cookie('base_cookie.xlsx')
     print(s)
     print(type(s))
     # for i in s:

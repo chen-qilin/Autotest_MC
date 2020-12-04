@@ -32,7 +32,7 @@ def run_case(tmp_dir="testcase"):
     case_dir = path + "\\" + tmp_dir
     # print(case_dir, 'run_case')
     # test_case = unittest.TestSuite()
-    discover = unittest.defaultTestLoader.discover(case_dir, pattern="mc_lpn.py", top_level_dir=None)
+    discover = unittest.defaultTestLoader.discover(case_dir, pattern="mc*.py", top_level_dir=None)
     return discover
 
 
