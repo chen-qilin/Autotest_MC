@@ -13,25 +13,12 @@ import ddt
 import unittest
 import requests
 import warnings
-from common.request_sender import SendRequests
-from common.excel_reader import ReadExcel
+from common.request_sender import RequestSender
+from common.excel_reader import ExcelReader
 
 
 # 读取excel中的测试数据
-test_data = ReadExcel().read('mc_lpn.xlsx')
-
-# 读取公共cookie
-cookies = ReadExcel().read_base_cookie('base_cookie.xlsx')
-
-# print(cookies)
-
-# # 自定义cookie
-# cookies = {
-#     'logId': '426b481b',
-#     'pp_user_id': '43508577064735267',
-#     'appid': 'wxed9d3e6dc4a3704f',
-#     'openid': 'o5sBys9oyRLcdz91FitDdTaRpfuY',
-# }
+test_data = ExcelReader().read('mc_lpn.xlsx')
 
 
 @ddt.ddt
@@ -49,7 +36,7 @@ class MemberCenter(unittest.TestCase):
         车牌校验接口
         """
         print(case_data)
-        response_result = SendRequests().send(self.session_obj, case_data, cookies=cookies)
+        response_result = RequestSender().send(self.session_obj, case_data)
 
         # 期望结果code
         if case_data["expect_code"] == '':
@@ -66,7 +53,7 @@ class MemberCenter(unittest.TestCase):
         else:
             expect = case_data['expect_data']
             response = response_result['data']
-            self.assertEqual(expect, response)-
+            self.assertEqual(expect, response)
 
         # 期望结果message
         if case_data["expect_msg"] == '':

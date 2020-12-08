@@ -15,7 +15,7 @@ import get_path_info
 from xlrd import open_workbook
 
 
-class ReadExcel:
+class ExcelReader:
     def __init__(self):
         self.path = get_path_info.get_Path()  # 拿到该项目所在的绝对路径
 
@@ -48,7 +48,7 @@ class ReadExcel:
             print("表格未填写数据")
             return None
 
-    def read_base_cookie(self, filename, sheet_name="Sheet1"):
+    def read_basic_data(self, filename="basic_data.xlsx", sheet_name="Sheet1"):
         xls_path = os.path.join(self.path, "testdata", filename)
 
         file = open_workbook(xls_path)  # 打开用例Excel
@@ -58,24 +58,35 @@ class ReadExcel:
         # 获取总行数、总列数
         rows = table.nrows
 
-        # 把基础cookies返回
-        if rows > 1:
-            base_cookie = table.row_values(1)
-            base_cookie = ast.literal_eval(base_cookie[0])  # 把字符串，转成dict
-            return base_cookie
+        if rows == 2:
+            # 获取第一列的内容，列表格式
+            keys = table.row_values(0)
+            # print(keys)
+
+            temp_data_lists = []
+            # 获取每一行的内容，列表格式
+            for col in range(1, rows):
+                values = table.row_values(col)
+                # keys，values这两个列表一一对应来组合转换为字典
+                api_dict = dict(zip(keys, values))
+                # print(api_dict)
+                temp_data_lists.append(api_dict)
+
+            return temp_data_lists
+
         else:
-            print("表格未填写数据")
+            print("basic_data.xlsx只能有2行：第一行表头，第二行数据")
             return None
 
 
 if __name__ == '__main__':
     pass
-    s = ReadExcel().read('mc_lpn.xlsx', "Sheet1")
-    # s = ReadExcel().read_base_cookie('base_cookie.xlsx')
-    print(s)
-    print(type(s))
-    # for i in s:
-    #     print(s)
+    # s = ExcelReader().read('mc_lpn.xlsx', "Sheet1")
+    s = ExcelReader().read_basic_data('basic_data.xlsx')
+    for i in range(len(s)):
+        print(s[i]["basic_cookie"])
+        print(s[i]["basic_headers"])
+
 
 
 

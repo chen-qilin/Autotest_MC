@@ -16,7 +16,7 @@ import get_path_info
 from common.HTMLTestReportCN import HTMLTestRunner
 from common.log import logger
 from config import read_config
-from common.email_sender import SendEmail
+from common.email_sender import EmailSender
 
 # 定位当前文件的路径
 path = get_path_info.get_Path()
@@ -49,7 +49,7 @@ if __name__ == '__main__':
             log.info('Error:%s' % e)
 
     if on_off == 'on':
-        SendEmail().send_email(report_path)
+        EmailSender().send_email(report_path)
         print(report_path)
     else:
         print("邮件发送开关配置关闭，请打开开关后可正常自动发送测试报告")

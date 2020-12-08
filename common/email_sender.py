@@ -19,7 +19,7 @@ from email.header import Header
 from common.log import logger
 
 
-class SendEmail(object):
+class EmailSender(object):
     def __init__(self):
         # 读取邮件配置信息，初始化参数
         read_conf = read_config.ReadConfig()
@@ -72,7 +72,7 @@ class SendEmail(object):
 
 
 if __name__ == '__main__':
-    SendEmail().send_email(r'D:\Autotest\report\2020-11-18-17_44_22.html')  # 测试邮件功能模块
+    EmailSender().send_email(r'D:\Autotest\report\2020-11-18-17_44_22.html')  # 测试邮件功能模块
     # with open(file=r'D:\Autotest\report\report.html', mode='r', encoding='utf-8') as f:
     #     print(f.read())
     # a = MIMEText(open(file=r'D:\Autotest\report\report.html', mode='r', encoding='utf-8').read(), 'base64', 'utf-8')
